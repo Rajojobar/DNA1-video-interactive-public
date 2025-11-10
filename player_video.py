@@ -2,6 +2,8 @@ from PyQt6.QtWidgets import QWidget, QVBoxLayout, QApplication
 from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PyQt6.QtMultimediaWidgets import QVideoWidget
 from PyQt6.QtCore import QTimer, QUrl
+from PyQt6.QtGui import QCursor
+
 import numpy as np
 
 class PlayerVideo(QWidget):
@@ -19,6 +21,13 @@ class PlayerVideo(QWidget):
         self.setLayout(layout)
 
         self.video_widget = QVideoWidget()
+
+        self.setMouseTracking(True)
+        self.video_widget.setMouseTracking(True)
+        # Cache screen geometry for efficiency )
+        self.screen_rect = QApplication.primaryScreen().geometry()
+
+
         layout.addWidget(self.video_widget)
 
         self.player = QMediaPlayer()
@@ -32,7 +41,7 @@ class PlayerVideo(QWidget):
         self.player.mediaStatusChanged.connect(self.check_finished)
         self.player.play()
 
-        
+
         # Timer pour le suicide
         if self.death > 0:
             self.suicide = QTimer(self)
@@ -41,7 +50,7 @@ class PlayerVideo(QWidget):
             self.suicide.start(self.death)
 
         # Timer pour vérifier la souris
-        self.timer = QTimer()
+        self.timer = QTimer(self)
         self.timer.timeout.connect(self.funnyStuff)
         self.timer.start(33)
 
@@ -51,11 +60,31 @@ class PlayerVideo(QWidget):
             self.close()
 
     def funnyStuff(self):
-        if self.underMouse(): 
-            screen_rect = QApplication.primaryScreen().geometry()  # OK ici
+        cursor_pos = QCursor.pos() # position de la souris
+        global_geom = self.frameGeometry()
+
+        if global_geom.contains(cursor_pos):
+            # Refresh screen geometry in case of multi-monitor or resolution changes
+            screen_rect = QApplication.primaryScreen().geometry()
             screen_width = screen_rect.width()
             screen_height = screen_rect.height()
 
-            new_x = np.random.randint(10, screen_width - self.width())
-            new_y = np.random.randint(10, screen_height - self.height())
-            self.setGeometry(new_x, new_y, self.width(), self.height())
+            w = self.width()
+            h = self.height()
+
+            max_x = screen_width - w - 10
+            max_y = screen_height - h - 10
+
+            if max_x <= 10:
+                new_x = 10
+            else:
+                new_x = int(np.random.randint(10, max_x + 1))
+
+            if max_y <= 10:
+                new_y = 10
+            else:
+                new_y = int(np.random.randint(10, max_y + 1))
+
+            self.move(new_x, new_y)
+            self.raise_()  # fenêter au premier plan
+            self.activateWindow()  # focus ?

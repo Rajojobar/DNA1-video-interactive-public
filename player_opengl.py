@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QApplication
-from PyQt6.QtCore import QTimer
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import QTimer, Qt
+from PyQt6.QtGui import QCursor
 import numpy as np
 import sys
 
@@ -22,12 +22,20 @@ class PlayerOpenGl(QWidget):
         # self.gl_widget = GLWidget(fragment_shader_source=shader, parent=self)
         # layout.addWidget(self.gl_widget)
 
-        # Encapsule la fenêtre OpenGL donnée dans un QWidget
         gl_window = classe_gl_window()
+        if not hasattr(gl_window, 'winId'):  # Basic check for QWindow
+            raise TypeError("classe_gl_window() must return a QWindow instance")
         gl_widget = QWidget.createWindowContainer(gl_window, self)
-        gl_widget.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        # gl_widget.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+
+        # pour récupérer les événements de la souris m^ quand rien n'est cliqué
+        self.setMouseTracking(True)
+        gl_widget.setMouseTracking(True)
 
         layout.addWidget(gl_widget)
+
+        # Cache screen geometry for efficiency )
+        self.screen_rect = QApplication.primaryScreen().geometry()
 
         # Timer pour le suicide
         if self.death > 0:
@@ -37,22 +45,36 @@ class PlayerOpenGl(QWidget):
             self.suicide.start(self.death)
 
         # Timer pour vérifier la souris
-        self.timer = QTimer()
+        self.timer = QTimer(self)
         self.timer.timeout.connect(self.funnyStuff)
         self.timer.start(33)
 
-    def check_finished(self, status):
-        # from PyQt6.QtMultimedia import QMediaPlayer
-        # if status == QMediaPlayer.MediaStatus.EndOfMedia:
-        #     self.close()
-        pass
-
     def funnyStuff(self):
-        if self.underMouse(): 
-            screen_rect = QApplication.primaryScreen().geometry()  # OK ici
+        cursor_pos = QCursor.pos() # position de la souris
+        global_geom = self.frameGeometry()
+
+        if global_geom.contains(cursor_pos):
+            # Refresh screen geometry in case of multi-monitor or resolution changes
+            screen_rect = QApplication.primaryScreen().geometry()
             screen_width = screen_rect.width()
             screen_height = screen_rect.height()
 
-            new_x = np.random.randint(10, screen_width - self.width())
-            new_y = np.random.randint(10, screen_height - self.height())
-            self.setGeometry(new_x, new_y, self.width(), self.height())
+            w = self.width()
+            h = self.height()
+
+            max_x = screen_width - w - 10
+            max_y = screen_height - h - 10
+
+            if max_x <= 10:
+                new_x = 10
+            else:
+                new_x = int(np.random.randint(10, max_x + 1))
+
+            if max_y <= 10:
+                new_y = 10
+            else:
+                new_y = int(np.random.randint(10, max_y + 1))
+
+            self.move(new_x, new_y)
+            self.raise_()  # fenêter au premier plan
+            self.activateWindow()  # focus ?
