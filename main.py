@@ -4,6 +4,7 @@ from player_video import PlayerVideo
 from player_opengl import PlayerOpenGl
 
 from opengl_random_color import RandomColorShader
+from opengl_aizawa_attractor import AizawaAttractorShader
 
 
 if __name__ == "__main__":
@@ -18,7 +19,7 @@ if __name__ == "__main__":
     player3 = PlayerOpenGl(RandomColorShader, titre="OpenGL Random Color", death=5000)
     player3.show()
 
-    player4 = PlayerOpenGl(RandomColorShader, titre="OpenGL Random Color", death=5000)
+    player4 = PlayerOpenGl(AizawaAttractorShader, titre="OpenGL Random Color", death=10000)
     player4.show()
 
     # player4 = rajojoQtWidget(titre="Rajojo Qt Widget", death=15000)
