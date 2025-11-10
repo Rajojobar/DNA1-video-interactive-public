@@ -1,6 +1,6 @@
 # Autoportrait vidéo exécutable  
   
-  Cet autoportrait explore une dimension plus interactive et autrement immersive du portrait vidéo. Il s'affranchit des règles traditionnelles du montage et de la composition vidéographique en compilant différents types d'images tels que des images fixes, des vidéos au format mp4 et des simulations en temps réel.
+  Cet autoportrait explore une dimension plus interactive et autrement immersive du portrait vidéo. Il s'affranchit des règles traditionnelles du montage et de la composition vidéographique en compilant différents types d'images tels que des images fixes, des vidéos au format mp4 et des simulations en temps réel. Le pseudo-aléatoire et le génératif jouent un rôle important dans le montage final.
 
 ## Installer et lancer le projet  
 

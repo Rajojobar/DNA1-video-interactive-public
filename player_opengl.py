@@ -1,9 +1,8 @@
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QApplication
 from PyQt6.QtCore import QTimer
+from PyQt6.QtCore import Qt
 import numpy as np
 import sys
-
-from shader_render import GLWidget
 
 class PlayerOpenGl(QWidget):
     ### Ce composant requiert de récupérer un argument correspondant à la classe de shader qu'il va afficher
@@ -20,11 +19,11 @@ class PlayerOpenGl(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
 
-        self.gl_widget = GLWidget(fragment_shader_source=shader, parent=self)
-        layout.addWidget(self.gl_widget)
+        # self.gl_widget = GLWidget(fragment_shader_source=shader, parent=self)
+        # layout.addWidget(self.gl_widget)
 
         # Encapsule la fenêtre OpenGL donnée dans un QWidget
-        gl_window = gl_window_class()
+        gl_window = classe_gl_window()
         gl_widget = QWidget.createWindowContainer(gl_window, self)
         gl_widget.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 

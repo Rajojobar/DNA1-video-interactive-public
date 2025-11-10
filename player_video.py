@@ -4,7 +4,7 @@ from PyQt6.QtMultimediaWidgets import QVideoWidget
 from PyQt6.QtCore import QTimer, QUrl
 import numpy as np
 
-class VideoPlayer(QWidget):
+class PlayerVideo(QWidget):
     def __init__(self, video_path, titre="sans titre", mute=False, position=(100,100), size=(640,480), death=-1, parent=None):
         super().__init__(parent)
 
