@@ -22,14 +22,14 @@ from random import randint
 class CliffordAttractorShader1(QtOpenGL.QOpenGLWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.resize(300, 300)
+        self.resize(250, 300)
         self._width = 300
         self._height = 300
         self.points = [(0.1, 0.1)]
-        self.a = 2.0
-        self.b = 1.5
-        self.c = 1.4
-        self.d = -1.8
+        self.a = -1.3
+        self.b = -1.3
+        self.c = -1.8
+        self.d = -1.9
         self.scale = 89.0  # scale to make the attractor visible in 300x300
 
         # prepopulate some points so there's something to draw immediately
@@ -105,14 +105,14 @@ class CliffordAttractorShader1(QtOpenGL.QOpenGLWindow):
 class CliffordAttractorShader2(QtOpenGL.QOpenGLWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.resize(200, 200)
+        self.resize(290, 310)
         self._width = 300
         self._height = 300
         self.points = [(0.1, 0.1)]
-        self.a = -1.3
-        self.b = -1.3
-        self.c = -1.8
-        self.d = -1.9
+        self.a = 2.0
+        self.b = 1.5
+        self.c = 1.4
+        self.d = -1.8
         self.scale = 100.0  # scale to make the attractor visible in 300x300
 
         # prepopulate some points so there's something to draw immediately
