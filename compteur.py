@@ -5,17 +5,20 @@ from PyQt6.QtGui import QCursor
 import numpy as np
 
 class Compteur(QWidget):
-    def __init__(self, death=-1, isFunny=True, parent=None):
+    def __init__(self, position=(200,500), size=(100,50), death=-1, isFunny=True,  parent=None):
         super().__init__(parent)
-        self.setWindowTitle('Compteur')
+        self.setWindowTitle('Compte à rebours')
+
+        x, y = position
+        width, height = size
+        self.setGeometry(x, y, width, height)
 
         self.death = death
         self.estDrole = isFunny
         self.elapsed_time = 0  # Track elapsed time in milliseconds
 
         self.listFile = QListWidget()
-        self.label = QLabel('')
-        self.remaining_time_label = QLabel('')  # New label for remaining time
+        self.remaining_time_label = QLabel('STARTING...')
         self.startBtn = QPushButton('Start')
         self.endBtn = QPushButton('Please stop!')
 
@@ -24,8 +27,7 @@ class Compteur(QWidget):
         self.timer = QTimer()
         self.timer.timeout.connect(self.showTime)
 
-        layout.addWidget(self.label, 0, 0, 1, 2)
-        layout.addWidget(self.remaining_time_label, 1, 0, 1, 2)  # Add remaining time label
+        layout.addWidget(self.remaining_time_label, 1, 0, 1, 2)
         layout.addWidget(self.startBtn, 2, 0)
         layout.addWidget(self.endBtn, 2, 1)
 
