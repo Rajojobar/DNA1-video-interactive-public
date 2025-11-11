@@ -26,11 +26,11 @@ class CliffordAttractorShader1(QtOpenGL.QOpenGLWindow):
         self._width = 300
         self._height = 300
         self.points = [(0.1, 0.1)]
-        self.a = -1.3
-        self.b = -1.3
-        self.c = -1.8
-        self.d = -1.9
-        self.scale = 100.0  # scale to make the attractor visible in 300x300
+        self.a = 2.0
+        self.b = 1.5
+        self.c = 1.4
+        self.d = -1.8
+        self.scale = 89.0  # scale to make the attractor visible in 300x300
 
         # prepopulate some points so there's something to draw immediately
         for _ in range(1):

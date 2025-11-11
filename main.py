@@ -72,7 +72,7 @@ if __name__ == "__main__":
             titre="Chaos Attractor 1",
             position=(100, 500),
             disable_close=True,
-            death=200000,
+            death=210000,
             isFunny=False,
         ),
         22700,
@@ -90,15 +90,16 @@ if __name__ == "__main__":
             Clifford2,
             titre="Chaos Attractor 2",
             position=(950, 580),
+            size=(220, 220),
             disable_close=True,
-            death=200000,
+            death=210000,
             isFunny=False,
         ),
         25100,
     )
 
     # Vidéo rush 2 à 30 secondes
-    schedule(partial(show_instance, PlayerVideo, "src/rush_2_long.mp4", position=(100, 100), size=(406,650), isFunny=False,  disable_close=True, estImportant=True, mute=False), 28500)
+    schedule(partial(show_instance, PlayerVideo, "src/rush_2_long_2.mp4", position=(100, 100), size=(406,650), isFunny=False,  disable_close=True, estImportant=True, mute=False), 28500)
 
     # Vidéo rush 3 à 42 secondes
     schedule(partial(show_instance, PlayerVideo, "src/rush_3.mp4", position=(1000, 300), size=(406,650), isFunny=False, disable_close=True, estImportant=True, mute=True), 42000)
