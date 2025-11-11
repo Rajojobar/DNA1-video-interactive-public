@@ -78,7 +78,7 @@ class CliffordAttractorShader1(QtOpenGL.QOpenGLWindow):
         self.add_new_point()
 
         GL.glClear(GL.GL_COLOR_BUFFER_BIT)
-        GL.glPointSize(randint(5, 5))
+        GL.glPointSize(randint(1, 5))
         # draw all points between glBegin/glEnd so OpenGL actually renders them
         GL.glBegin(GL.GL_POINTS)
         couleur = (255, 255, 255)
@@ -159,7 +159,7 @@ class CliffordAttractorShader2(QtOpenGL.QOpenGLWindow):
         self.add_new_point()
 
         # GL.glClear(GL.GL_COLOR_BUFFER_BIT)
-        GL.glPointSize(randint(1, 3))
+        GL.glPointSize(1)
         # draw all points between glBegin/glEnd so OpenGL actually renders them
         GL.glBegin(GL.GL_POINTS)
         couleur = (255, 255, 255)

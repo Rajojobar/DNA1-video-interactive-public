@@ -54,13 +54,13 @@ if __name__ == "__main__":
 
 
     # Début du film (titre) Durée : 30 secondes
-    schedule(partial(show_instance_fullscreen, PlayerImage, "src/titre.png", size=(1920,1080), titre="Titre", death=35000), 0)
+    schedule(partial(show_instance_fullscreen, PlayerImage, "src/titre.png", size=(1920,1080), titre="Titre", death=34100), 0)
     
     # Début de la bande son à 8 secondes
     schedule(partial(play_audio, "src/audio1.mp3", volume=70), 8000)
 
     # Création du compteur à 8 secondes 
-    schedule(partial(show_instance, Compteur, position=(300,900), death=999999, isFunny=False), 8000)
+    schedule(partial(show_instance, Compteur, position=(300,900), death=233000, isFunny=False), 8000)
     
     # OpenGL Clifford Attractor 1 à 21 secondes Termine à 40 secondes
     from opengl_clifford_attractor import CliffordAttractorShader1 as Clifford1
@@ -98,10 +98,10 @@ if __name__ == "__main__":
     )
 
     # Vidéo rush 2 à 30 secondes
-    schedule(partial(show_instance, PlayerVideo, "src/rush_2.mp4", position=(100, 100), size=(406,650), isFunny=False,  disable_close=True, estImportant=True, mute=False), 30000)
+    schedule(partial(show_instance, PlayerVideo, "src/rush_2_long.mp4", position=(100, 100), size=(406,650), isFunny=False,  disable_close=True, estImportant=True, mute=False), 28500)
 
     # Vidéo rush 3 à 42 secondes
-    schedule(partial(show_instance, PlayerVideo, "src/rush_3.mp4", position=(500, 100), size=(406,650), isFunny=False, disable_close=True, estImportant=True, mute=True), 42000)
+    schedule(partial(show_instance, PlayerVideo, "src/rush_3.mp4", position=(1000, 300), size=(406,650), isFunny=False, disable_close=True, estImportant=True, mute=True), 42000)
 
 
     sys.exit(app.exec())

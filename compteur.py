@@ -7,7 +7,7 @@ import numpy as np
 class Compteur(QWidget):
     def __init__(self, position=(200,500), size=(150,50), death=-1, isFunny=False,  parent=None):
         super().__init__(parent)
-        self.setWindowTitle('Compte à rebours')
+        self.setWindowTitle('Compteur')
 
         x, y = position
         width, height = size
