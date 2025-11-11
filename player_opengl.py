@@ -6,11 +6,13 @@ import sys
 
 class PlayerOpenGl(QWidget):
     ### Ce composant requiert de récupérer un argument correspondant à la classe de shader qu'il va afficher
-    def __init__(self, classe_gl_window, titre="sans titre", position=(100,100), size=(640,480), death=-1, isFunny=False, parent=None):
+    def __init__(self, classe_gl_window, titre="sans titre", disable_close=False, position=(100,100), size=(640,480), death=-1, isFunny=False, parent=None):
         super().__init__(parent)
         
         self.death = death # durée de vie en ms 
         self.estDrole = isFunny
+        self.disable_close = disable_close
+        self._allow_close = disable_close == False
 
         self.setWindowTitle(titre)
         x, y = position
@@ -42,7 +44,7 @@ class PlayerOpenGl(QWidget):
         if self.death > 0:
             self.suicide = QTimer(self)
             self.suicide.setSingleShot(True)
-            self.suicide.timeout.connect(self.close)
+            self.suicide.timeout.connect(self._programmatic_close)
             self.suicide.start(self.death)
 
         # Timer pour vérifier la souris
@@ -50,6 +52,27 @@ class PlayerOpenGl(QWidget):
             self.timer = QTimer(self)
             self.timer.timeout.connect(self.funnyStuff)
             self.timer.start(33)
+
+    def _programmatic_close(self):
+        """Allow a programmatic close (used by internal timers) and then close."""
+        self._allow_close = True
+        self.close()
+
+    def closeEvent(self, event):
+        """Ignore user-initiated close events when disable_close is True.
+
+        Programmatic closes should call _programmatic_close() to set
+        _allow_close True before calling close(), which will let the
+        event be accepted.
+        """
+        if self.disable_close and not getattr(self, "_allow_close", False):
+            # ignore user close
+            event.ignore()
+            return
+        # reset the flag — after a programmatic close we don't want
+        # future closes to be auto-allowed
+        self._allow_close = False
+        event.accept()
 
     def funnyStuff(self):
         cursor_pos = QCursor.pos() # position de la souris

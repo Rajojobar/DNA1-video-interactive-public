@@ -54,34 +54,54 @@ if __name__ == "__main__":
 
 
     # Début du film (titre) Durée : 30 secondes
-    schedule(partial(show_instance_fullscreen, PlayerImage, "src/titre.png", size=(1920,1080), titre="Titre", death=30000), 0)
+    schedule(partial(show_instance_fullscreen, PlayerImage, "src/titre.png", size=(1920,1080), titre="Titre", death=35000), 0)
     
-    # Début de mla bande son à 8 secondes
+    # Début de la bande son à 8 secondes
     schedule(partial(play_audio, "src/audio1.mp3", volume=70), 8000)
 
     # Création du compteur à 8 secondes 
-    schedule(partial(show_instance, Compteur, death=999999, isFunny=True), 8000)
+    schedule(partial(show_instance, Compteur, position=(300,900), death=999999, isFunny=False), 8000)
     
-    # OpenGL Clifford Attractor 1 à 20 secondes Termine à 40 secondes
-    from opengl_clifford_attractor import CliffordAttractorShader as Clifford0
+    # OpenGL Clifford Attractor 1 à 21 secondes Termine à 40 secondes
+    from opengl_clifford_attractor import CliffordAttractorShader1 as Clifford1
     schedule(
         partial(
             show_instance,
             PlayerOpenGl,
-            Clifford0,
+            Clifford1,
             titre="Chaos Attractor 1",
-            position=(800, 500),
+            position=(100, 500),
+            disable_close=True,
             death=200000,
-            isFunny=True,
+            isFunny=False,
         ),
-        20000,
+        22700,
     )
 
-    # Vidéo rush 1 à 29 secondes
-    schedule(partial(show_instance, PlayerVideo, "src/rush_1.mp4", isFunny=True, mute=True), 24000)
+    # Vidéo rush 1 à 22.5 secondes
+    schedule(partial(show_instance, PlayerVideo, "src/rush_1.mp4", position=(800,100),  disable_close=True, isFunny=False, mute=True), 23800)
 
-    # Vidéo rush 2 à 29 secondes
-    schedule(partial(show_instance, PlayerVideo, "src/rush_2.mp4", size=(900,1440), isFunny=True, mute=False), 30000)
+    # OpenGL Clifford Attractor 2 à 23.8 secondes
+    from opengl_clifford_attractor import CliffordAttractorShader2 as Clifford2
+    schedule(
+        partial(
+            show_instance,
+            PlayerOpenGl,
+            Clifford2,
+            titre="Chaos Attractor 2",
+            position=(950, 580),
+            disable_close=True,
+            death=200000,
+            isFunny=False,
+        ),
+        25100,
+    )
+
+    # Vidéo rush 2 à 30 secondes
+    schedule(partial(show_instance, PlayerVideo, "src/rush_2.mp4", position=(100, 100), size=(406,650), isFunny=False,  disable_close=True, estImportant=True, mute=False), 30000)
+
+    # Vidéo rush 3 à 42 secondes
+    schedule(partial(show_instance, PlayerVideo, "src/rush_3.mp4", position=(500, 100), size=(406,650), isFunny=False, disable_close=True, estImportant=True, mute=True), 42000)
 
 
     sys.exit(app.exec())

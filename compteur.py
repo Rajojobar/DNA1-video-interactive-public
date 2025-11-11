@@ -5,7 +5,7 @@ from PyQt6.QtGui import QCursor
 import numpy as np
 
 class Compteur(QWidget):
-    def __init__(self, position=(200,500), size=(100,50), death=-1, isFunny=True,  parent=None):
+    def __init__(self, position=(200,500), size=(150,50), death=-1, isFunny=False,  parent=None):
         super().__init__(parent)
         self.setWindowTitle('Compte à rebours')
 
