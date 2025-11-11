@@ -50,7 +50,6 @@ class Compteur(QWidget):
             self.tracking.timeout.connect(self.funnyStuff)
             self.tracking.start(33)
             self.setMouseTracking(True)
-            self.label.setMouseTracking(True)
 
         self.setLayout(layout)
 
