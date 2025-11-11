@@ -6,10 +6,11 @@ import sys
 
 class PlayerOpenGl(QWidget):
     ### Ce composant requiert de récupérer un argument correspondant à la classe de shader qu'il va afficher
-    def __init__(self, classe_gl_window, titre="sans titre", position=(100,100), size=(640,480), death=-1, parent=None):
+    def __init__(self, classe_gl_window, titre="sans titre", position=(100,100), size=(640,480), death=-1, isFunny=False, parent=None):
         super().__init__(parent)
         
         self.death = death # durée de vie en ms 
+        self.estDrole = isFunny
 
         self.setWindowTitle(titre)
         x, y = position
@@ -45,9 +46,10 @@ class PlayerOpenGl(QWidget):
             self.suicide.start(self.death)
 
         # Timer pour vérifier la souris
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.funnyStuff)
-        self.timer.start(33)
+        if self.estDrole:
+            self.timer = QTimer(self)
+            self.timer.timeout.connect(self.funnyStuff)
+            self.timer.start(33)
 
     def funnyStuff(self):
         cursor_pos = QCursor.pos() # position de la souris
@@ -76,5 +78,5 @@ class PlayerOpenGl(QWidget):
                 new_y = int(np.random.randint(10, max_y + 1))
 
             self.move(new_x, new_y)
-        self.raise_()  # fenêter au premier plan
-        self.activateWindow()  # focus ?
+            self.raise_()  # fenêter au premier plan
+            self.activateWindow()  # focus ?

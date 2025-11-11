@@ -7,10 +7,11 @@ from PyQt6.QtGui import QCursor
 import numpy as np
 
 class PlayerVideo(QWidget):
-    def __init__(self, video_path, titre="sans titre", mute=False, position=(100,100), size=(640,480), death=-1, parent=None):
+    def __init__(self, video_path, titre="sans titre", mute=False, position=(100,100), size=(640,480), death=-1, isFunny=False, parent=None):
         super().__init__(parent)
 
         self.death = death # durée de vie en ms 
+        self.estDrole = isFunny
 
         self.setWindowTitle(titre)
         x, y = position
@@ -50,9 +51,10 @@ class PlayerVideo(QWidget):
             self.suicide.start(self.death)
 
         # Timer pour vérifier la souris
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.funnyStuff)
-        self.timer.start(33)
+        if self.estDrole:
+            self.timer = QTimer(self)
+            self.timer.timeout.connect(self.funnyStuff)
+            self.timer.start(33)
 
     def check_finished(self, status):
         from PyQt6.QtMultimedia import QMediaPlayer

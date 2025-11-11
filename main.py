@@ -1,36 +1,54 @@
 import sys
-try:
-    from PyQt6.QtWidgets import QApplication
-except ImportError as e:
-    print("PyQt6 is not installed or could not be imported:", e)
-    sys.exit(1)
+from functools import partial
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtCore import QTimer
 
 from player_video import PlayerVideo
 from player_opengl import PlayerOpenGl
-
-# from opengl_random_color import RandomColorShader
-
+from player_image import PlayerImage
+from compteur import Compteur
 
 if __name__ == "__main__":
-
     app = QApplication(sys.argv)
 
-    # Exemple : lancer plusieurs vidéos en même temps
-    player1 = PlayerVideo("src/video.mp4", mute=True)
-    player2 = PlayerVideo("src/video.mp4", mute=True)
-    player1.show()
-    player2.show()
+    # keep references so Qt windows are not garbage-collected
+    windows = []
 
-    # player3 = PlayerOpenGl(RandomColorShader, titre="OpenGL Random Color", death=5000)
-    # player3.show()
+    # Generated
+    def show_instance(cls, *args, **kwargs):
+        inst = cls(*args, **kwargs)
+        windows.append(inst)
+        inst.show()
+        return inst
+    
+    def show_instance_fullscreen(cls, *args, **kwargs):
+        inst = cls(*args, **kwargs)
+        windows.append(inst)
+        inst.showFullScreen()
+        return inst
+    
+    # Generated
+    def schedule(callable_obj, delay_ms):
+        QTimer.singleShot(delay_ms, callable_obj)
+
+    # Début du film (titre)
+    schedule(partial(show_instance_fullscreen, PlayerImage, "src/titre.png", size=(1920,1080), titre="Titre", death=20000), 0)
+    
+    schedule(partial(show_instance, Compteur, death=999999, isFunny=True), 11000)
+    schedule(partial(show_instance, PlayerVideo, "src/rush_1.mp4", isFunny=True, mute=True), 15000)
 
     from opengl_clifford_attractor import CliffordAttractorShader as Clifford0
-    player4 = PlayerOpenGl(Clifford0, titre="Clifford Attractor 1", death=200000)
-    player4.show()
+    schedule(
+        partial(
+            show_instance,
+            PlayerOpenGl,
+            Clifford0,
+            titre="Clifford Attractor 1",
+            position=(800, 500),
+            death=200000,
+            isFunny=True,
+        ),
+        12000,
+    )
 
-
-
-
-    # start the Qt event loop so the windows are displayed
     sys.exit(app.exec())
-    
