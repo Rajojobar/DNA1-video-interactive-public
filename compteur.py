@@ -15,6 +15,11 @@ class Compteur(QWidget):
 
         self.death = death
         self.estDrole = isFunny
+        # If disable_close is True, the window will ignore user-initiated
+        # close events (clicking the titlebar X). Programmatic closes
+        # (via _programmatic_close) are still allowed.
+        self.disable_close = True
+        self._allow_close = False
         self.elapsed_time = 0  # Track elapsed time in milliseconds
 
         self.listFile = QListWidget()
@@ -41,7 +46,9 @@ class Compteur(QWidget):
         if self.death > 0:
             self.suicide = QTimer(self)
             self.suicide.setSingleShot(True)
-            self.suicide.timeout.connect(self.close)
+            # connect to a helper so programmatic close is allowed even when
+            # user close events are ignored
+            self.suicide.timeout.connect(self._programmatic_close)
             self.suicide.start(self.death)
 
         # Timer for mouse tracking
@@ -52,6 +59,27 @@ class Compteur(QWidget):
             self.setMouseTracking(True)
 
         self.setLayout(layout)
+
+    def _programmatic_close(self):
+        """Allow a programmatic close (used by internal timers) and then close."""
+        self._allow_close = True
+        self.close()
+
+    def closeEvent(self, event):
+        """Ignore user-initiated close events when disable_close is True.
+
+        Programmatic closes should call _programmatic_close() to set
+        _allow_close True before calling close(), which will let the
+        event be accepted.
+        """
+        if self.disable_close and not getattr(self, "_allow_close", False):
+            # ignore user close
+            event.ignore()
+            return
+        # reset the flag — after a programmatic close we don't want
+        # future closes to be auto-allowed
+        self._allow_close = False
+        event.accept()
 
     def showTime(self):
         current_time = QDateTime.currentDateTime()
@@ -64,6 +92,9 @@ class Compteur(QWidget):
             remaining_seconds = remaining_time // 1000
             self.remaining_time_label.setText(f'Remaining: {remaining_seconds} seconds')
             self.elapsed_time += 1000  # Increment elapsed time
+
+            self.raise_()  # fenêter au premier plan
+            self.activateWindow()  # focus ?
 
     def startTimer(self):
         self.timer.start(1000)

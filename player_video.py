@@ -7,11 +7,12 @@ from PyQt6.QtGui import QCursor
 import numpy as np
 
 class PlayerVideo(QWidget):
-    def __init__(self, video_path, titre="sans titre", mute=False, position=(100,100), size=(640,480), death=-1, isFunny=False, parent=None):
+    def __init__(self, video_path, titre="sans titre", mute=False, estImportant=False, position=(100,100), size=(640,480), death=-1, isFunny=False, parent=None):
         super().__init__(parent)
 
         self.death = death # durée de vie en ms 
         self.estDrole = isFunny
+        self.Important = estImportant
 
         self.setWindowTitle(titre)
         x, y = position
@@ -88,5 +89,6 @@ class PlayerVideo(QWidget):
                 new_y = int(np.random.randint(10, max_y + 1))
 
             self.move(new_x, new_y)
-        self.raise_()  # fenêter au premier plan
-        self.activateWindow()  # focus ?
+        if self.Important:
+            self.raise_()  # fenêter au premier plan
+            self.activateWindow()  # focus ?
