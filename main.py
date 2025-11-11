@@ -1,6 +1,12 @@
 import sys
-from PyQt6.QtWidgets import QApplication
+try:
+    from PyQt6.QtWidgets import QApplication
+except ImportError as e:
+    print("PyQt6 is not installed or could not be imported:", e)
+    sys.exit(1)
+
 from player_video import PlayerVideo
+from player_opengl import PlayerOpenGl
 
 # from opengl_random_color import RandomColorShader
 
@@ -18,11 +24,13 @@ if __name__ == "__main__":
     # player3 = PlayerOpenGl(RandomColorShader, titre="OpenGL Random Color", death=5000)
     # player3.show()
 
-    # from opengl_clifford_attractor import CliffordAttractorShader as Clifford0
-    # player4 = PlayerOpenGl(Clifford0, titre="Clifford Attractor 1", death=200000)
-    # player4.show()
+    from opengl_clifford_attractor import CliffordAttractorShader as Clifford0
+    player4 = PlayerOpenGl(Clifford0, titre="Clifford Attractor 1", death=200000)
+    player4.show()
 
 
-    # player4 = rajojoQtWidget(titre="Rajojo Qt Widget", death=15000)
-    # player4.show() 
+
+
+    # start the Qt event loop so the windows are displayed
+    sys.exit(app.exec())
     

@@ -72,8 +72,8 @@ if __name__ == "__main__":
     # OpenGL players
     p3 = Process(
         target=_run_player_opengl,
-        args=("opengl_aizawa_attractor", "AizawaAttractorShader"),
-        kwargs={"titre": "OpenGL Aizawa", "death": 10000},
+        args=("opengl_clifford_attractor", "CliffordAttractorShader"),
+        kwargs={"titre": "OpenGL clifford", "death": 10000},
     )
     processes.append(p3)
 

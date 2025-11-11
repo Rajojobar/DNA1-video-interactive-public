@@ -76,5 +76,5 @@ class PlayerOpenGl(QWidget):
                 new_y = int(np.random.randint(10, max_y + 1))
 
             self.move(new_x, new_y)
-            self.raise_()  # fenêter au premier plan
-            self.activateWindow()  # focus ?
+        self.raise_()  # fenêter au premier plan
+        self.activateWindow()  # focus ?
