@@ -101,6 +101,21 @@ if __name__ == "__main__":
     # Vidéo rush 2 à 30 secondes
     schedule(partial(show_instance, PlayerVideo, "src/rush_2_long_2.mp4", titre="scrotch scrotch", position=(100, 100), size=(406,650), isFunny=False,  disable_close=True, estImportant=True, mute=False), 28500)
 
+    # Jeu de la vie de conway à 37 secondes
+    from opengl_conway import ConwaySimulation
+    schedule(
+        partial(
+            show_instance, 
+            PlayerOpenGl, 
+            ConwaySimulation, 
+            titre="conway",
+            position=(1700, 800),
+            disable_close=True,
+            death=150000,
+            isFunny=False
+        ),
+        37000
+    )
     # Vidéo rush 3 à 42 secondes
     schedule(partial(show_instance, PlayerVideo, "src/rush_3.mp4", titre="chêne", position=(1000, 300), size=(406,650), isFunny=False, disable_close=True, estImportant=True, mute=True), 42000)
 
