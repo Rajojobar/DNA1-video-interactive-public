@@ -1,3 +1,4 @@
+from functools import partial
 import sys
 from PyQt6 import QtOpenGL
 from OpenGL import GL
@@ -22,8 +23,9 @@ from PyQt6.QtWidgets import QApplication
 #     draw_points()
 
 class ConwaySimulation(QtOpenGL.QOpenGLWindow):
-    def __init__(self, parent=None):
-        super().__init__(parent)
+    def __init__(self, parent=None, color_pattern=None):
+        super().__init__()
+        self.setTitle("{}".format(color_pattern if color_pattern else "Conway Game of Life"))
         self.resize(290, 250)
         # self._width = 300
         # self._height = 300
@@ -31,7 +33,13 @@ class ConwaySimulation(QtOpenGL.QOpenGLWindow):
         self.game_width = 100
         self.game_height = 100
 
+        self.color_was_specified = color_pattern is not None
+
         self.strongColor = choice([(1, 0, 0), (0, 1, 0), (0, 0, 1), (1, 1, 0), (0, 1, 1), (1, 0, 1)])
+
+        if (self.color_was_specified):
+            self.strongColor = color_pattern
+        
         self.matrice = np.zeros((300, 300), dtype=int)
         self.puissanceCouleur = randint(70,150)
         
@@ -43,7 +51,10 @@ class ConwaySimulation(QtOpenGL.QOpenGLWindow):
         # self.matrice[149, 299] = 1
         # self.matrice[151, 299] = 1
         # self.matrice[150, 298] = 1
-        self.strongColor = choice([(1, 0, 0), (0, 1, 0), (0, 0, 1), (1, 1, 0), (0, 1, 1), (1, 0, 1)])
+        if self.color_was_specified:
+            pass
+        else:
+            self.strongColor = choice([(1, 0, 0), (0, 1, 0), (0, 0, 1), (1, 1, 0), (0, 1, 1), (1, 0, 1)])
         self.puissanceCouleur = randint(70,200)
 
         for _ in range(self.game_width * self.game_height // 10):
@@ -137,7 +148,7 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
 
-    player = PlayerOpenGl(ConwaySimulation, titre="Conway")
+    player = PlayerOpenGl(partial(ConwaySimulation, color_pattern=(0, 0, 1)))
 
     player.show()
     sys.exit(app.exec())
