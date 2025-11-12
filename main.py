@@ -99,7 +99,7 @@ if __name__ == "__main__":
     )
 
     # Vidéo rush 2 à 30 secondes
-    schedule(partial(show_instance, PlayerVideo, "src/rush_2_long_2.mp4", titre="du coup je pars marcher", position=(100, 100), size=(406,650), isFunny=False,  disable_close=True, estImportant=True, mute=False), 28500)
+    schedule(partial(show_instance, PlayerVideo, "src/rush_2_long_2.mp4", titre="scrotch scrotch", position=(100, 100), size=(406,650), isFunny=False,  disable_close=True, estImportant=True, mute=False), 28500)
 
     # Vidéo rush 3 à 42 secondes
     schedule(partial(show_instance, PlayerVideo, "src/rush_3.mp4", titre="chêne", position=(1000, 300), size=(406,650), isFunny=False, disable_close=True, estImportant=True, mute=True), 42000)
