@@ -10,8 +10,8 @@ Ce projet requiert python3 et nécessite d'être exécuté sur une machine compa
 2. Sur certains systèmes la prochaine étape nécessitera la création d'un environnement virtuel (instructions détaillées dans le fichier venv.sh)
 3. Installer les dépendances du projet :
   
-  pip install -r dependancies
+  `pip install -r dependancies`
 
 4. Lancez le projet avec la commande suivante :
 
-  python3 main.py
+  `python3 main.py`
