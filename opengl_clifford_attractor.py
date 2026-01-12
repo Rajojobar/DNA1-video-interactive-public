@@ -3,22 +3,6 @@ from OpenGL import GL
 import numpy as np
 from random import randint
 
-# def draw_points():
-#     glBegin(GL_POINTS)
-#     for (x, y) in points:
-#         glColor3ub(*calculate_next_color())
-#         glVertex2f(x * 0.1, y * 0.1)
-#     glEnd()
-
-# if __name__ == "__main__":
-#     glClearColor(0.0, 0.0, 0.0, 1.0)
-#     glPointSize(1.0)
-#     x, y = 0.1, 0.1
-#     for _ in range(10000):
-#         x, y = next_point(x, y)
-#         add_point((x, y))
-#     draw_points()
-
 class CliffordAttractorShader1(QtOpenGL.QOpenGLWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
